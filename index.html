@@ -3,7 +3,8 @@
   <title>A Leaflet map!</title>
   <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
   <script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-  <script src="jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
 
   <!-- <script src="jquery-2.1.1.min.js"></script> -->
   <style>
@@ -28,7 +29,7 @@
 
 
   // load GeoJSON from an external file
-  $.getJSON("facilities.json",function(data){
+  $.getJSON("parks.json",function(data){
     // add GeoJSON layer to the map once the file is loaded
     L.geoJson(data).addTo(map);
   });
