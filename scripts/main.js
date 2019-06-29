@@ -229,6 +229,10 @@ introDiv.initializeInfo = function () {
             <a href="http://www.solanocounty.com/" target="_blank" class="mx-auto"><h1>Solano County Active Transportation Plan</h1></a>
           </div>
         </div>
+				<div class="row mx-auto" style="width: 300px;">
+					<div class="col mx-auto text-left">
+						<img href="img/sta.png" target="_blank" class="mx-auto"></img>
+					</div>
 
         <hr>
 
