@@ -224,14 +224,15 @@ introDiv.initializeInfo = function () {
       <button type="button" id="introCloseButton" class="close" aria-label="Close" style="color: #000;"><span aria-hidden="true"><i class="far fa-minus-square"></i></span></button>
 
       <span id="introDivSpanId">
+			<div class="row mx-auto" style="width: 300px;">
+					<img src="img/sta.png" style = "width:300px;" </img>
+				</div>
         <div class="row mx-auto" style="width: 300px;">
           <div class="col mx-auto text-left">
             <a href="http://www.solanocounty.com/" target="_blank" class="mx-auto"><h1>Solano County Active Transportation Plan</h1></a>
           </div>
         </div>
-				<div class="row mx-auto" style="width: 300px;">
-						<img src="img/sta.png" </img>
-					</div>
+
 
         <hr>
 
