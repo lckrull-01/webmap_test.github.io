@@ -230,8 +230,7 @@ introDiv.initializeInfo = function () {
           </div>
         </div>
 				<div class="row mx-auto" style="width: 300px;">
-					<div class="col mx-auto text-left">
-						<img href="img/sta.png" target="_blank" class="mx-auto"></img>
+						<img src="img/sta.png" </img>
 					</div>
 
         <hr>
