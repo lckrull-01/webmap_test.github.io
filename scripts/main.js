@@ -31,28 +31,28 @@ var overlaysIDs = [-1, -1, -1, -1, -1, -1, -1, -1]; //0: existing, 1: proposed, 
 var drawnItems  = new L.FeatureGroup();
 map.addLayer(drawnItems);
 
-var existingSymbologyDict = {'trail connector': '#76ab43', 
-                              'trail': '#76ab43',
+var existingSymbologyDict = {'trail connector': '#228B22',
+                              'trail': '#228B22',
                               'unpaved trail': '#a75e3f',
-                              // 'bike-friendly roads': '#636363', 
+                              // 'bike-friendly roads': '#636363',
                               'bike lane': '#3F90A7'
 };
 var existingSymbologyDictKeys = Object.keys(existingSymbologyDict);
 
-var symbologyDict = {'Class I Multi-Use Path': '#76ab43', 
-                      'Class II Bicycle Lane': "#3F90A7", 
-                      'Class III Bicycle Route': "#ffcc66", 
-                      'Class III Bicycle Boulevard': "#E36F1E", 
-                      'Class II Buffered Bicycle Lane': "#174759", 
+var symbologyDict = {'Class I Multi-Use Path': '#228B22',
+                      'Class II Bicycle Lane': "#3F90A7",
+                      'Class III Bicycle Route': "#ffcc66",
+                      'Class III Bicycle Boulevard': "#E36F1E",
+                      'Class II Buffered Bicycle Lane': "#174759",
                       'Class IV Separated Bikeway': '#ab4375'};
 
 var symbologyDictKeys = Object.keys(symbologyDict);
 
-var pedSymbologyDict = {'Capital Improvement Program': '#76ab43', 
-                        'Sidewalk Gap Closure': "#3F90A7", 
-                        'Safe Routes to School': "#ffcc66", 
-                        'Safe Routes to Transit': "#E36F1E", 
-                        'Safety': "#174759", 
+var pedSymbologyDict = {'Capital Improvement Program': '#76ab43',
+                        'Sidewalk Gap Closure': "#3F90A7",
+                        'Safe Routes to School': "#ffcc66",
+                        'Safe Routes to Transit': "#E36F1E",
+                        'Safety': "#174759",
                         'Walk Audit': '#ab4375'};
 
 var pedSymbologyDictKeys = Object.keys(pedSymbologyDict);
@@ -111,7 +111,7 @@ var surveyQuestionsKeys = Object.keys(surveyQuestions);
 // for (var i = 0; i < symbologyDictKeys.length; i++) {
 //   activeExisting.push(symbologyDictKeys[i]);
 //   allExisting.push(symbologyDictKeys[i]);
-//   existingArray[symbologyDictKeys[i]] = []; 
+//   existingArray[symbologyDictKeys[i]] = [];
 
 //   activeProposed.push(symbologyDictKeys[i]);
 //   allProposed.push(symbologyDictKeys[i]);
@@ -158,7 +158,7 @@ function capitalize(inString) {
 
     for (var i = 0; i < splitString.length; i++) {
       returnedString.push(splitString[i].charAt(0).toUpperCase() + splitString[i].slice(1).toLowerCase());
-    } 
+    }
   }
 
   return returnedString.join(" ");
@@ -225,7 +225,7 @@ introDiv.initializeInfo = function () {
 
       <span id="introDivSpanId">
         <div class="row mx-auto" style="width: 300px;">
-          <div class="col mx-auto text-center">
+          <div class="col mx-auto text-left">
             <a href="http://www.solanocounty.com/" target="_blank" class="mx-auto"><h1>Solano County Active Transportation Plan</h1></a>
           </div>
         </div>
