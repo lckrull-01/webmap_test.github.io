@@ -1,88 +1,293 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<title>Election Results</title>
+	<script src="httpS://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+	<script src="httpS://d3js.org/topojson.v1.min.js"></script>
+	<script src="https://d3js.org/d3-queue.v2.min.js"></script>
+	<script src="data/problem_set_data/results.json"></script>
 
-  <title>Solano County - Bike and Pedestrian Plan</title>
+	<style>
+		body {
+			position: absolute;
+			font-family: "TW Cent Mt", "Montserrat", sans-serif;
+		}
+		h1, h2 {
+			position: center;
+			left: 10px;
+			font-size: 1.3em;
+			font-weight: 100;
+			text-align: center;
+			font-family: "TW Cen Mt";
+			margin-bottom: 0px;
+		}
+		h3 {
+			top: 30px;
+			font-size: 1em;
+			font-weight: 100;
+			text-align: center;
+			font-family: "TW Cen Mt";
+			margin-top: 0px;
+		}
 
-  <!-- <link rel="shortcut icon" href="img/square-p-01-copy.png"> -->
+		  .my-legend ul.legend-labels p span {
+			display: block;
+			float: left;
+			height: 15px;
+			width: 50px;
+			list-style-type: none;
+			margin-right: 6px;
+			font-family: "TW Cen MT"
+			}
+		  .my-legend .legend-source {
+			font-size: 70%;
+			color: #999;
+			clear: both;
+			font-family: "TW Cen MT"
+			}
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap" rel="stylesheet">
+		.my-legend .legend-labels p {
+			margin-top: 0px;
+			margin-bottom: 0px;
+			font-family: "TW Cen MT";
 
-  <!-- Load Leaflet 1.4 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.js"></script>
+		}
 
-  <!-- Load jQuery -->
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-ui.min.js"></script>
+		.my-legend {
 
-  <!-- Load Leaflet Draw -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+		position: relative;
+		display: block;
+		margin-bottom: 0px;
 
-  <!-- Load Bootstrap et. al. -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		}
 
-  <!-- Main css -->
-  <link rel="stylesheet" href="css/styles.css" />
+		.hover {
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="https://unpkg.com/esri-leaflet"></script>
+			opacity: 0.75;
 
-  <!-- Load Esri Leaflet Geocoder from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
-    crossorigin="">
-  <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
-    crossorigin=""></script>
+		}
 
-  <!-- Load Google API -->
-  <script src="https://apis.google.com/js/api.js"></script>
+		div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px "TW CEN MT";
+    background: #ffffff;
+		opacity: 0.8;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+		line-height: 28px;
+}
 
-  <!-- Load Sidebar -->
-  <link rel="stylesheet" href="js/sidebar/sidebar.css" />
-  <script src="js/sidebar/sidebar.js"></script>
+
+		#credits {
+			text-align: left;
+			position: relative;
+			top: 30px;
+			font-family: "TW CEN MT";
+			font-size: 0.6em;
+
+		}
+		#sliderContainer {
+			text-align: center;
+			position: relative;
+			top: 30px;
+			font-family: "TW CEN MT";
+
+			}
+		input[type="range"]{
+			-webkit-appearance: none;
+			-moz-apperance: none;
+			border-radius: 6px;
+			height: 6px;
+			background-image: -webkit-gradient(
+				linear,
+				left top,
+				right top,
+				color-stop(1.0, #A9A9A9),
+				color-stop(1.0, #C5C5C5)
+			);
+		}
+
+		input[type='range']::-webkit-slider-thumb {
+			-webkit-appearance: none !important;
+			background-color: #E9E9E9;
+			border: 1px solid #CECECE;
+			height: 15px;
+			width: 15px;
+		}
+
+	</style>
 
 </head>
+<body>
 
-  <body>
-    <div id="containerDiv">
-      <!-- Map div -->
-      <div id="participationMapDiv">
-        <!-- Main js -->
-        <script src="scripts/main.js"></script>
+	<!-- Page elements and content go here. -->
+	<h1>Presidential Election Results</h1>
+	<h3>By State | 2000-2016</h3>
+	<!-- Page elements and content go here. -->
 
-        <!-- Modules -->
-        <script src="scripts/cityLimits.js"></script>
-        <script src="scripts/tooltip.js"></script>
-        <script src="scripts/legend.js"></script>
-        <script src="scripts/loadJsonData.js"></script>
-        <script src="scripts/getPreviousComments.js"></script>
-        <script src="scripts/survey.js"></script>
-        <script src="scripts/createFeatures.js"></script>
-        <script src="scripts/mapToggles.js"></script>
-        <script src="scripts/drawing.js"></script>
+	<div class = "my-legend">
+		<div id="wrapper" style="text-align: ">
+			<div class=legend-scale">
+				<ul class="legend-labels">
+					<p>
+						<span style="background:#336699"></span>
+						Democrat
+					</p>
+					<p>
+						<span style="background:#BD2031"></span>
+						Republican
+					</p>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-        <!-- For street view -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnQUtLMfKlqquk87var6Oz-wtNhnLLaxU"></script>
-      </div>
-    </div>
-  </body>
+	<div class = "container">
+		<div id = "map"></div>
+	</div>
 
+
+	<div id="sliderContainer">
+		<input id="timeslide" type="range" min="0" max="4" value="0" step="1"/><br>
+		<span id="range">2000</span>
+	</div>
+	<div id="credits">
+		<p>Data Source: U.S. National Archives and Records Administration</p>
+	</div>
+	<script>
+		var inputValue = null;
+		var year = ["2000","2004","2008","2012","2016"];
+		var dictionary = {"2000": "elect2000", "2004": "elect2004", "2008": "elect2008", "2012": "elect2012", "2016": "elect2016"};
+
+		var color = ["#2166ac", "#BD2031"];
+
+
+
+	<!-- Page elements and content go here. -->
+
+		var width = 800;
+			height = 475;
+
+		var albersProjection = d3.geoAlbersUsa()
+			.scale( 1000 )
+			.translate( [width/2,height/2] );
+
+		var geoPath = d3.geoPath()
+			.projection( albersProjection );
+
+		var svg = d3.select("#map").append("svg")
+			.attr("width", width)
+			.attr("height", height);
+		var g = svg.append("g");
+
+		var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+		g.selectAll( "path" )
+			.data( election_results_json.features )
+			.enter()
+			.append( "path" )
+			.attr( "fill", initial )
+			.attr( "stroke", "#A9A9A9")
+			.attr( "d", geoPath )
+			.attr( "class", "incident")
+			.on("mouseover", function(d){
+				d3.select("h2").text(d.properties.name);
+				d3.select(this).attr("class","incident hover");
+				div.transition()
+							.duration(200)
+							.style("opacity", .9);
+					div	.html(d.properties.name)
+							.style("left", (d3.event.pageX) + "px")
+							.style("top", (d3.event.pageY - 28) + "px");
+
+			})
+			.on("mouseout", function(d){
+				d3.select("h2").text("");
+				d3.select(this).attr("class","incident");
+			});
+
+
+
+		// when the input range changes update the value
+		d3.select("#timeslide").on("input", function() {
+			update(+this.value);
+		});
+
+
+		// update the fill of each SVG of class "incident" with value
+		function update(value) {
+			document.getElementById("range").innterHTML=year[value];
+			inputValue = dictionary[year[value]];
+			//console.log(inputValue);
+			d3.selectAll(".incident")
+				.attr("fill", DemRep);
+			var slidertxt = year[value];
+			console.log(slidertxt);
+			d3.select("#range").text(slidertxt);
+			d3.select("#sliderContainer").property("value", inputValue);
+
+		}
+
+
+		//funciton to return a color
+		function DemRep(data, value) {
+			if (inputValue=="elect2000"){
+			path = data.properties.elect2000
+			}
+			if (inputValue=="elect2004"){
+			path = data.properties.elect2004
+			}
+
+			if (inputValue=="elect2008"){
+			path = data.properties.elect2008
+			}
+
+			if (inputValue=="elect2012"){
+			path = data.properties.elect2012
+			}
+
+			if (inputValue=="elect2016"){
+			path = data.properties.elect2016
+			}
+
+
+			if(path == "D")
+			{
+				this.parentElement.appendChild(this);
+				return color[0];
+					}
+			if (path == "R") {
+				this.parentElement.appendChild(this);
+				return color[1];
+
+			}
+
+
+		}
+
+		function initial(d,i){
+			var m = year[i];
+			if (m = "2000") {
+				if (d.properties.elect2000 == "D"){
+					this.parentElement.appendChild(this);
+					return color[0];
+						}
+				if (d.properties.elect2000 == "R") {
+					this.parentElement.appendChild(this);
+					return color[1];
+						}
+				};
+			}
+
+
+	</script>
+
+</body>
 </html>
